@@ -1,9 +1,6 @@
 FROM node:18 AS frontend-build
 WORKDIR /app/frontend
 COPY frontend/package*.json ./
-# Αν ΕΧΕΙΣ package-lock.json στο repo, προτίμησε npm ci:
-# RUN npm ci --no-audit --no-fund --legacy-peer-deps
-# Αλλιώς, χρησιμοποίησε npm install:
 RUN npm ci --no-audit --no-fund --legacy-peer-deps
 COPY frontend/ .
 RUN npm run build
@@ -21,8 +18,9 @@ RUN python -m pip install --upgrade pip setuptools wheel --disable-pip-version-c
 COPY backend/ /app/backend/
 RUN mkdir -p /app/backend/static/assets /app/backend/templates
 COPY --from=frontend-build /app/frontend/dist/assets /app/backend/static/assets/
+COPY --from=frontend-build /app/frontend/dist/itelis.svg /app/backend/static/itelis.svg
 COPY --from=frontend-build /app/frontend/dist/index.html /app/backend/templates/index.html
-
+RUN sed -i 's|href="/itelis.svg"|href="/static/itelis.svg"|g' /app/backend/templates/index.html
 WORKDIR /app/backend
 RUN python manage.py collectstatic --noinput && python manage.py migrate --noinput
 
