@@ -8,7 +8,7 @@ load_dotenv(BASE_DIR / ".env")
 SECRET_KEY = 'django-insecure-&5ruyze!i(cs=gotxbzro$1#0zby^^9hepk8uw&^njt&r$o5#n'
 DEBUG = os.getenv("DEBUG", "True") == "True"
 
-ALLOWED_HOSTS = ["*"]
+
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -69,7 +69,17 @@ REST_FRAMEWORK = {
 
 # CORS/CSRF για το React dev server (Vite: 5173)
 # Αν θες αυστηρά CORS, πρόσθεσε django-cors-headers αργότερα.
+
 CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:5173", "http://127.0.0.1:5173",
-    "https://exxotelis.com", "https://www.exxotelis.com"
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "https://exxotelis.com",
+    "https://www.exxotelis.com",
+    f"https://{os.getenv('RAILWAY_PUBLIC_DOMAIN', '')}"
+]
+
+ALLOWED_HOSTS = [
+    "exxotelis.com",
+    "www.exxotelis.com",
+    os.getenv("RAILWAY_PUBLIC_DOMAIN", "")
 ]
