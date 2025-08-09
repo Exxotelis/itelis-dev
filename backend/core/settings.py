@@ -71,3 +71,5 @@ DATABASES = {
         "NAME": os.getenv("SQLITE_PATH", BASE_DIR / "db.sqlite3"),
     }
 }
+ROOT_URLCONF = "core.urls"
+WSGI_APPLICATION = "core.wsgi.application"
