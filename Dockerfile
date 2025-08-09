@@ -1,11 +1,12 @@
 FROM node:18 AS frontend-build
 WORKDIR /app/frontend
 COPY frontend/package*.json ./
-RUN RUN npm install --no-audit --no-fund --legacy-peer-deps
-
+# Αν ΕΧΕΙΣ package-lock.json στο repo, προτίμησε npm ci:
+# RUN npm ci --no-audit --no-fund --legacy-peer-deps
+# Αλλιώς, χρησιμοποίησε npm install:
+RUN npm ci --no-audit --no-fund --legacy-peer-deps
 COPY frontend/ .
-RUN npm -v && npm run build 
-
+RUN npm run build
 
 FROM python:3.11-slim AS backend
 ENV PYTHONDONTWRITEBYTECODE=1
