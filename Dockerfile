@@ -1,10 +1,9 @@
 FROM node:18 AS frontend-build
 WORKDIR /app/frontend
 COPY frontend/package*.json ./
-RUN npm ci --no-audit --no-fund --legacy-peer-deps
+RUN RUN npm install --no-audit --no-fund --legacy-peer-deps
 
-COPY frontend/ .
-RUN node -v && npm -v && npm run build --verbose || (echo "---- NPM DEBUG LOGS ----" && ls -la /root/.npm/_logs || true && cat /root/.npm/_logs/*-debug-*.log || true && exit 1)
+
 
 
 FROM python:3.11-slim AS backend
