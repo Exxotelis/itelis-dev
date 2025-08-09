@@ -26,3 +26,5 @@ RUN pip install -r /app/backend/requirements.txt
 
 # Copy backend code μετά τα deps για καλύτερο cache
 COPY backend/ /app/backend/
+ENV PORT=8000
+CMD ["/bin/sh","-c","gunicorn core.wsgi:application --bind 0.0.0.0:${PORT} --workers 3 --timeout 60"]
