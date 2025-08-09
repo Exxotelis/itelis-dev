@@ -10,7 +10,7 @@ DEBUG = True  # Set to False in production
 ALLOWED_HOSTS = [
     "exxotelis.com",
     "www.exxotelis.com",
-    os.getenv("RAILWAY_PUBLIC_DOMAIN", ""),   # π.χ. itelis-dev-production.up.railway.app
+    "https://itelis-dev-production.up.railway.app",   # π.χ. itelis-dev-production.up.railway.app
 ]
 
 CSRF_TRUSTED_ORIGINS = [
