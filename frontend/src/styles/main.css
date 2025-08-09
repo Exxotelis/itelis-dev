@@ -1,0 +1,105 @@
+/* ====== Small, safe overrides for the template ====== */
+html { scroll-behavior: smooth; }
+
+/* 1) Brand σε tokens του template */
+:root {
+  --white-color:                  #ffffff;
+  --primary-color:                #3359c0;
+  --secondary-color:              #0fced1;
+  --section-bg-color:             #f9f9f9;
+  --dark-color:                   #000000;
+  --p-color:                      #717275;
+  --border-color:                 #e9eaeb;
+  --featured-border-color:        #727aab;
+}
+
+/* 2) Wrapper για κεντράρισμα περιεχομένου εκτός hero (προαιρετικό) */
+.app-shell { display: flex; justify-content: center; }
+.app-inner { width: min(96vw, 1200px); padding: 0 1rem; }
+
+/* 3) Helpers δικά μας (ΔΕΝ πειράζουμε .navbar/.section του template) */
+.tag {
+  font-size: .8rem;
+  border: 1px solid rgba(0,0,0,0.08);
+  background: #fff;
+}
+
+/* Αν χρησιμοποιείς Bootstrap buttons παράλληλα με custom-btn */
+.btn-primary { background: var(--primary-color); border-color: var(--primary-color); }
+.btn-primary:hover { filter: brightness(.95); }
+
+/* Πολύ light hover για κάρτες (συμβατό με template) */
+.card { transition: transform .18s ease, box-shadow .18s ease; }
+.card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,.08); }
+
+/* 4) Dark mode: κάνουμε override ΜΟΝΟ τα tokens του template */
+html[data-bs-theme="dark"] {
+  --white-color:         #0f1115;   /* “σώμα” σε dark */
+  --dark-color:          #e9ecef;   /* βασικό κείμενο */
+  --section-bg-color:    #121621;
+  --border-color:        #242a39;
+  --p-color:             #c7cfdd;
+
+  /* Προαιρετικά προσαρμογή τόνων */
+  /* --primary-color:   #7a86ff;   */
+  /* --secondary-color: #21d09d;   */
+}
+
+/* Sticky navbar σε dark: να μη γίνεται κατάλευκη */
+html[data-bs-theme="dark"] .is-sticky,
+html[data-bs-theme="dark"] .is-sticky .navbar .container {
+  background: var(--white-color);
+  box-shadow: 0 1rem 2rem rgba(0,0,0,.35);
+}
+
+/* Toggler γραμμές σε dark όταν δεν είναι sticky */
+@media (max-width: 991px) {
+  html[data-bs-theme="dark"] .navbar-toggler .navbar-toggler-icon,
+  html[data-bs-theme="dark"] .navbar-toggler .navbar-toggler-icon::before,
+  html[data-bs-theme="dark"] .navbar-toggler .navbar-toggler-icon::after {
+    background: var(--dark-color);
+  }
+}
+
+/* 5) (Αν θες) το δικό μας portfolio hover effect – παίζει παράλληλα */
+.portfolio-card{
+  position:relative; height:260px; border-radius:14px; overflow:hidden;
+  background-color:#e9eefb; background-size:cover; background-position:center;
+  display:block; text-decoration:none;
+}
+.portfolio-overlay{
+  position:absolute; inset:0;
+  background: linear-gradient(180deg, rgba(0,0,0,.0) 40%, rgba(0,0,0,.65) 100%);
+  opacity:0; transition: opacity .18s ease;
+  display:flex; align-items:flex-end; color:#fff;
+}
+.portfolio-card:hover .portfolio-overlay{ opacity:1; }
+
+/* Όταν γίνει sticky, κάν’ την navbar fixed πάνω-πάνω */
+body.has-fixed-nav .navbar {
+  position: fixed !important;
+  top: 0; left: 0; right: 0;
+  z-index: 1050;
+}
+
+/* Δώσε χώρο στο περιεχόμενο για το fixed nav (χωρίς layout jump) */
+body.has-fixed-nav {
+  padding-top: var(--nav-h, 72px);
+}
+
+.brand-logo { height: 32px; width: auto; display: block; }
+@media (min-width: 992px) { .brand-logo { height: 36px; } }
+
+.brand-logo.brand-logo--invert { filter: invert(1) hue-rotate(180deg); }
+html[data-bs-theme="dark"] .brand-logo.brand-logo--invert { filter: invert(1) hue-rotate(180deg); }
+
+.projects-desc{
+  color: var(--p-color);
+  font-size: var(--p-font-size);
+  margin-top: .25rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;       /* 2 γραμμές max */
+  line-clamp: 2;               /* Standard property for compatibility */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
