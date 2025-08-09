@@ -18,7 +18,7 @@ CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:5173",
     "https://exxotelis.com",
     "https://www.exxotelis.com",
-    f"https://{os.getenv('RAILWAY_PUBLIC_DOMAIN','')}",
+    f"https://itelis-dev-production.up.railway.app",
 ]
 
 INSTALLED_APPS = [
