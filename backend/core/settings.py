@@ -2,8 +2,10 @@ import os
 from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "dev-only")
-DEBUG = os.getenv("DEBUG", "False") == "True"
+#SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "dev-only")
+SECRET_KEY = "django-insecure-&5ruyze!i(cs=gotxbzro$1#0zby^^9hepk8uw&^njt&r$o5#n"
+#DEBUG = os.getenv("DEBUG", "False") == "True"
+DEBUG = True  # Set to False in production
 
 ALLOWED_HOSTS = [
     "exxotelis.com",
