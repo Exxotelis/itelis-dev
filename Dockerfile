@@ -22,8 +22,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Install Python deps (με flags για λιγότερη RAM)
 COPY backend/requirements.txt /app/backend/requirements.txt
-RUN pip setuptools wheel --disable-pip-version-check && \
-    pip install --no-cache-dir --prefer-binary --no-compile -r /app/backend/requirements.txt
+RUN pip install -r /app/backend/requirements.txt
 
 # Copy backend code μετά τα deps για καλύτερο cache
 COPY backend/ /app/backend/
