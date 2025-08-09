@@ -1,9 +1,9 @@
 FROM node:18 AS frontend-build
 WORKDIR /app/frontend
 COPY frontend/package*.json ./
-RUN npm ci
+RUN npm ci --no-audit --no-fund --legacy-peer-deps
 COPY frontend/ .
-RUN npm run build
+RUN node -v && npm -v && npm run build --verbose
 
 FROM python:3.11-slim AS backend
 ENV PYTHONDONTWRITEBYTECODE=1
