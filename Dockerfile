@@ -13,9 +13,15 @@ ENV PIP_NO_CACHE_DIR=1
 WORKDIR /app
 RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates curl && rm -rf /var/lib/apt/lists/*
 
+
 COPY backend/requirements.txt /app/backend/requirements.txt
 RUN python -m pip install --upgrade pip setuptools wheel --disable-pip-version-check && \
-    pip install --no-cache-dir --prefer-binary --no-compile -r /app/backend/requirements.txt
+    pip install --no-cache-dir --prefer-binary --no-compile Django==5.0.* && \
+    pip install --no-cache-dir --prefer-binary --no-compile djangorestframework==3.15.* && \
+    pip install --no-cache-dir --prefer-binary --no-compile gunicorn==21.2.* && \
+    pip install --no-cache-dir --prefer-binary --no-compile whitenoise==6.6.* && \
+    pip install --no-cache-dir --prefer-binary --no-compile python-dotenv==1.0.*
+
 
 COPY backend/ /app/backend/
 RUN mkdir -p /app/backend/static/assets /app/backend/templates
