@@ -3,7 +3,8 @@ WORKDIR /app/frontend
 COPY frontend/package*.json ./
 RUN RUN npm install --no-audit --no-fund --legacy-peer-deps
 
-
+COPY frontend/ .
+RUN npm -v && npm run build 
 
 
 FROM python:3.11-slim AS backend
