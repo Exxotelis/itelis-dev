@@ -10,15 +10,15 @@ DEBUG = True  # Set to False in production
 ALLOWED_HOSTS = [
     "exxotelis.com",
     "www.exxotelis.com",
-    "itelis-dev-production.up.railway.app",   # π.χ. itelis-dev-production.up.railway.app
-]
+    "itelis-dev-production.up.railway.app", 
+    ]  
 
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
     "https://exxotelis.com",
     "https://www.exxotelis.com",
-    f"https://itelis-dev-production.up.railway.app",
+    "itelis-dev-production.up.railway.app",
 ]
 
 INSTALLED_APPS = [
