@@ -6,7 +6,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / ".env")
 
 SECRET_KEY = 'django-insecure-&5ruyze!i(cs=gotxbzro$1#0zby^^9hepk8uw&^njt&r$o5#n'
-DEBUG = os.getenv("DEBUG", "True") == "True"
+#DEBUG = os.getenv("DEBUG", "True") == "True"
+DEBUG = True  # Set to False in production
 
 
 
