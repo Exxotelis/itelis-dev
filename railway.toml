@@ -15,5 +15,4 @@ start = "gunicorn core.wsgi:application --bind 0.0.0.0:${PORT}"
 # --- Frontend (React static) ---
 [service.frontend]
 root = "frontend"
-build = "npm ci && npm run build"
 
