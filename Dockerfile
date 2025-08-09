@@ -9,36 +9,21 @@ RUN npm run build
 # ---------- Backend (Django) ----------
 FROM python:3.11-slim AS backend
 ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1
-
-# System deps
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential curl ca-certificates && \
-    rm -rf /var/lib/apt/lists/*
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1
 
 WORKDIR /app
 
-# Install Python deps
-COPY backend/requirements.txt ./backend/requirements.txt
-RUN pip install --upgrade pip && pip install -r backend/requirements.txt
+# (ΜΗΝ εγκαθιστάς build-essential αν δεν χρειάζεται να κάνεις compile)
+# System deps μόνο αν πραγματικά τα χρειάζεσαι
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates curl && \
+    rm -rf /var/lib/apt/lists/*
 
-# Copy backend code
-COPY backend/ ./backend/
+# Install Python deps (με flags για λιγότερη RAM)
+COPY backend/requirements.txt /app/backend/requirements.txt
+RUN python -m pip install --upgrade pip setuptools wheel --disable-pip-version-check && \
+    pip install --no-cache-dir --prefer-binary --no-compile -r /app/backend/requirements.txt
 
-# Copy React build into Django (assets -> static, index -> templates)
-# - assets θα τα σερβίρει το WhiteNoise
-# - index.html θα το σερβίρει TemplateView ως SPA
-RUN mkdir -p backend/static/assets backend/templates && \
-    true
-
-COPY --from=frontend-build /app/frontend/dist/assets ./backend/static/assets/
-COPY --from=frontend-build /app/frontend/dist/index.html ./backend/templates/index.html
-
-# Collect static & run migrations at build time
-WORKDIR /app/backend
-RUN python manage.py collectstatic --noinput && \
-    python manage.py migrate --noinput
-
-# Run with Gunicorn
-ENV PORT=8000
-CMD ["gunicorn", "core.wsgi:application", "--bind", "0.0.0.0:${PORT}", "--workers", "3"]
+# Copy backend code μετά τα deps για καλύτερο cache
+COPY backend/ /app/backend/
