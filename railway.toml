@@ -1,0 +1,17 @@
+[workspace]
+members = ["backend", "frontend"]
+
+[service.backend]
+root = "backend"
+build = """
+pip install --upgrade pip
+pip install -r requirements.txt
+python manage.py collectstatic --noinput
+python manage.py migrate --noinput
+"""
+start = "gunicorn core.wsgi:application --bind 0.0.0.0:${PORT}"
+
+[service.frontend]
+root = "frontend"
+build = "npm ci && npm run build"
+static = { directory = "dist" }
