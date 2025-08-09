@@ -16,5 +16,4 @@ start = "gunicorn core.wsgi:application --bind 0.0.0.0:${PORT}"
 [service.frontend]
 root = "frontend"
 build = "npm ci && npm run build"
-static = { directory = "dist" }
 
