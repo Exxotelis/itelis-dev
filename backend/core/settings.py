@@ -73,3 +73,35 @@ DATABASES = {
 }
 ROOT_URLCONF = "core.urls"
 WSGI_APPLICATION = "core.wsgi.application"
+
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_HSTS_SECONDS = 31536000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+X_FRAME_OPTIONS = "DENY"
+SECURE_REFERRER_POLICY = "same-origin"
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "filters": {
+        "ignore_noise": {
+            "()": "django.utils.log.CallbackFilter",
+            "callback": lambda r: not any(
+                bad in (getattr(r, "request", None) and r.request.get_full_path() or "")
+                for bad in ["/wp-", "xmlrpc.php", ".env", "/.git", ".php"]
+            ),
+        }
+    },
+    "handlers": {
+        "console": {"class": "logging.StreamHandler", "filters": ["ignore_noise"]},
+    },
+    "loggers": {
+        "django.request": {"handlers": ["console"], "level": "WARNING", "propagate": False},
+        "django.security.DisallowedHost": {"handlers": ["console"], "level": "ERROR", "propagate": False},
+    },
+}
