@@ -57,9 +57,9 @@ export default function Contact() {
 
               <strong className="site-footer-title d-block mt-4 mb-3">Stay connected</strong>
               <ul className="social-icon">
-                <li className="social-icon-item"><a href="#" className="social-icon-link bi-twitter" aria-label="Twitter" /></li>
+                <li className="social-icon-item"><a href="#" className="social-icon-link bi bi-twitter" aria-label="Twitter" /></li>
                 <li className="social-icon-item"><a href="#" className="social-icon-link bi-instagram" aria-label="Instagram" /></li>
-                <li className="social-icon-item"><a href="#" className="social-icon-link bi-pinterest" aria-label="Pinterest" /></li>
+                <li className="social-icon-item"><a href="#" className="social-icon-link bi bi-pinterest" aria-label="Pinterest" /></li>
                 <li className="social-icon-item"><a href="#" className="social-icon-link bi-youtube" aria-label="YouTube" /></li>
               </ul>
 

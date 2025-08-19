@@ -1,6 +1,6 @@
 export const site = {
   brand: "itelis ", phone: "+4474338774",
-  logo: "./images/itelis.png",
+  logo: `${import.meta.env.BASE_URL}images/itelis.png`,
   tagline: "Web Developer • React • Django • Bootstrap",
   email: "info@vorinvista.com",
   links: {

@@ -6,7 +6,7 @@ const services = [
     title: "Websites",
     price: "from $1,800",
     desc: "Fast, responsive landing/corporate sites with React/Bootstrap or WordPress, SEO-ready.",
-    icon: "bi-globe",
+    icon: "bi bi-globe",
     up: false,
     cta: { type: "scroll", label: "See Examples", href: "#section_4" } // Projects
   },
@@ -14,7 +14,7 @@ const services = [
     title: "Web Apps",
     price: "from $3,500",
     desc: "Full-stack apps with Django REST + React. Auth, dashboards, Stripe payments, Cloudinary.",
-    icon: "bi-code-slash",
+    icon: "bi bi-code-slash",
     up: true,
     cta: { type: "link", label: "Book a Call", href: "https://calendly.com/exxotelis", blank: true }
   },
@@ -22,7 +22,7 @@ const services = [
     title: "E-commerce",
     price: "from $2,800",
     desc: "Shopify stores with custom Liquid themes, subscriptions, and integrations.",
-    icon: "bi-bag-check",
+    icon: "bi bi-bag-check",
     up: false,
     cta: { type: "scroll", label: "Get Quote", href: "#section_5", check: "ecommerce" } // pre-check στο Contact
   },
@@ -30,7 +30,7 @@ const services = [
     title: "WordPress & SEO",
     price: "from $700",
     desc: "Performance tuning (Core Web Vitals), on-page SEO, security & backups.",
-    icon: "bi-speedometer2",
+    icon: "bi bi-speedometer2",
     up: true,
     cta: { type: "mailto", label: "Email Me", to: "you@example.com", subject: "WordPress & SEO help", body: "Hi itelis,\n\nI’d like help with WordPress & SEO.\n\nDetails:" }
   },
@@ -39,7 +39,12 @@ const services = [
 function SectionTitle() {
   return (
     <div className="section-title-wrap d-flex justify-content-center align-items-center mb-5">
-      <img src="/images/handshake-man-woman-after-signing-business-contract-closeup.jpg" className="avatar-image img-fluid" alt="Handshake" />
+      <img
+  src={`${import.meta.env.BASE_URL}images/handshake-man-woman-after-signing-business-contract-closeup.jpg`}
+  className="avatar-image img-fluid"
+  alt="Handshake"
+/>
+
       <h2 className="text-white ms-4 mb-0">Services</h2>
     </div>
   );
