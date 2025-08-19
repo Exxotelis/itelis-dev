@@ -21,7 +21,7 @@ export default function About() {
               <div className="section-title-wrap d-flex justify-content-end align-items-center mb-4">
                 <h2 className="text-white me-4 mb-0">About me</h2>
                 <img
-                  src="/static/images/itelis-hero.png"
+                  src="/images/itelis-hero.png"
                   className="avatar-image img-fluid"
                   alt="itelis avatar"
                 />

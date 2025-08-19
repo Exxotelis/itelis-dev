@@ -25,7 +25,7 @@ export default function Hero() {
           {/* big hero image (transparent PNG) */}
           <div className="col-lg-5 col-12 position-relative">
             <div className="hero-image-wrap"></div>
-            <img src="static/images/itelis-hero.png" className="hero-image img-fluid" alt="itelis" />
+            <img src="/images/itelis-hero.png" className="hero-image img-fluid" alt="itelis" />
           </div>
         </div>
       </div>
