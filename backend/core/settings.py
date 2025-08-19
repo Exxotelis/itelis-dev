@@ -60,7 +60,8 @@ TEMPLATES = [{
 
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+
 if settings.DEBUG:  # μόνο σε development
     FRONTEND_DIST = (BASE_DIR.parent / 'frontend' / 'dist').resolve()
     print(">> FRONTEND_DIST =", FRONTEND_DIST)  # προσωρινό debug
