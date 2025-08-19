@@ -1,44 +1,50 @@
 # ---------- Frontend build ----------
 FROM node:18 AS frontend-build
 WORKDIR /app/frontend
+
+# Εγκατάσταση deps
 COPY frontend/package*.json ./
 RUN npm ci --no-audit --no-fund --legacy-peer-deps
+
+# Κώδικας FE & build (Vite με base:'/static/')
 COPY frontend/ .
-# Σιγουρέψου ότι στο vite.config.js έχεις base: '/static/'
 RUN npm run build
+# Παράγει: /app/frontend/dist
+#   - assets/ (js, css)
+#   - images/, icons, manifest, κ.λπ.
+#   - index.html (με refs σε /static/...)
 
-# ---------- Backend runtime image ----------
+
+# ---------- Backend runtime ----------
 FROM python:3.11-slim AS backend
-
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=1
 
 WORKDIR /app
 
-# Install deps
+# Python deps
 COPY backend/requirements.txt /app/backend/requirements.txt
 RUN python -m pip install --upgrade pip setuptools wheel --disable-pip-version-check && \
     pip install --no-cache-dir --prefer-binary --no-compile -r /app/backend/requirements.txt
 
-# Copy backend code
+# Κώδικας backend
 COPY backend/ /app/backend/
 
-# Προετοιμασία φακέλων static/templates
-RUN mkdir -p /app/backend/static/assets /app/backend/templates
+# Προετοιμασία φακέλων
+RUN mkdir -p /app/backend/static /app/backend/templates
 
-# Copy FE build → Django static & templates
-COPY --from=frontend-build /app/frontend/dist/assets /app/backend/static/assets/
-COPY --from=frontend-build /app/frontend/dist/index.html /app/backend/templates/index.html
-# (προαιρετικό) Αν το index.html αναφέρει /itelis.svg εκτός assets:
-# COPY --from=frontend-build /app/frontend/dist/itelis.svg /app/backend/static/itelis.svg
-# RUN sed -i 's|href="/itelis.svg"|href="/static/itelis.svg"|g' /app/backend/templates/index.html
+# --- Κρίσιμο σημείο: αντιγράφουμε ΟΛΟ το FE build στα static ---
+COPY --from=frontend-build /app/frontend/dist /app/backend/static/
+# και κρατάμε το index.html ως template για να σερβίρεται το SPA
+RUN cp /app/backend/static/index.html /app/backend/templates/index.html
 
-# Collect static (μπορείς και στο runtime αν προτιμάς)
+# Συλλογή static → μεταφέρει από backend/static → backend/staticfiles
 WORKDIR /app/backend
 RUN python manage.py collectstatic --noinput
 
-# ΠΡΟΤΙΜΟΤΕΡΟ: migrate στο runtime (όχι στο build)
-# CMD τρέχουμε migrate και μετά gunicorn
+# Εκκίνηση: πρώτα migrate, μετά gunicorn
+# (DJANGO settings: DEBUG=False, STATIC_URL=/static/, ΧΩΡΙΣ STATICFILES_DIRS σε prod,
+#  WhiteNoise ενεργό: middleware + CompressedManifestStaticFilesStorage)
 CMD /bin/sh -c "python manage.py migrate --noinput && \
-                gunicorn core.wsgi:application --bind 0.0.0.0:${PORT:-8000} --workers 3 --timeout 60"
+                gunicorn core.wsgi:application --bind 0.0.0.0:${PORT:-8080} --workers 3 --timeout 60"
