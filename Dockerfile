@@ -16,12 +16,15 @@ RUN npm run build
 
 
 # ---------- Backend runtime ----------
-FROM python:3.11-slim AS backend
+FROM python:3.11-slim-bullseye AS backend
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=1
 
 WORKDIR /app
+
+# Update system packages to patch vulnerabilities
+RUN apt-get update && apt-get upgrade -y && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Python deps
 COPY backend/requirements.txt /app/backend/requirements.txt
