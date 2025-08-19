@@ -66,7 +66,7 @@ if settings.DEBUG:  # μόνο σε development
     print(">> FRONTEND_DIST =", FRONTEND_DIST)  # προσωρινό debug
     STATICFILES_DIRS = [FRONTEND_DIST]
 else:
-    STATICFILES_DIRS = [] 
+    STATICFILES_DIRS = [BASE_DIR / 'static'] 
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.getenv("MEDIA_ROOT", BASE_DIR / "media")
