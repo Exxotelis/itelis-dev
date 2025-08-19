@@ -9,7 +9,7 @@ export default function Hero() {
             <div className="hero-text">
               <div className="hero-title-wrap d-flex align-items-center mb-4">
                 {/* μικρό avatar (transparent PNG) */}
-                <img src="static/images/itelis-ava.png" className="avatar-image avatar-image-large img-fluid" alt="itelis" />
+                <img src={`${import.meta.env.BASE_URL}images/itelis-ava.png`} className="avatar-image avatar-image-large img-fluid" alt="itelis" />
                 <h1 className="hero-title ms-3 mb-0">itelis </h1>
               </div>
 
@@ -25,7 +25,10 @@ export default function Hero() {
           {/* big hero image (transparent PNG) */}
           <div className="col-lg-5 col-12 position-relative">
             <div className="hero-image-wrap"></div>
-            <img src="/images/itelis-hero.png" className="hero-image img-fluid" alt="itelis" />
+            <img 
+             src={`${import.meta.env.BASE_URL}images/itelis-hero.png`}
+
+             className="hero-image img-fluid" alt="itelis" />
           </div>
         </div>
       </div>

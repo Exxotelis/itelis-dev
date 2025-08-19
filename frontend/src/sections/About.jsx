@@ -7,11 +7,11 @@ export default function About() {
 
           {/* Image (left) */}
           <div className="col-lg-6 col-12">
-            <img
-              src="/images/couple-working-from-home-together-sofa.jpg"
-              className="about-image img-fluid"
-              alt="Working from home"
-            />
+        <img
+          src={`${import.meta.env.BASE_URL}images/couple-working-from-home-together-sofa.jpg`}
+          className="about-image img-fluid"
+          alt="Working from home"
+        />
           </div>
 
           {/* Copy (right) */}
@@ -21,7 +21,7 @@ export default function About() {
               <div className="section-title-wrap d-flex justify-content-end align-items-center mb-4">
                 <h2 className="text-white me-4 mb-0">About me</h2>
                 <img
-                  src="/images/itelis-hero.png"
+                  src={`${import.meta.env.BASE_URL}images/itelis-hero.png`}
                   className="avatar-image img-fluid"
                   alt="itelis avatar"
                 />
