@@ -2,10 +2,10 @@ import os
 from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-#SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "dev-only")
-SECRET_KEY = "django-insecure-&5ruyze!i(cs=gotxbzro$1#0zby^^9hepk8uw&^njt&r$o5#n"
-#DEBUG = os.getenv("DEBUG", "False") == "True"
-DEBUG = True  # Set to False in production
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "dev-only")
+#SECRET_KEY = "django-insecure-&5ruyze!i(cs=gotxbzro$1#0zby^^9hepk8uw&^njt&r$o5#n"
+DEBUG = os.getenv("DEBUG", "False") == "True"
+#DEBUG = True  # Set to False in production
 
 ALLOWED_HOSTS = [
     "exxotelis.com",
@@ -46,7 +46,7 @@ MIDDLEWARE = [
 # Templates: βάλε φάκελο templates στο backend/
 TEMPLATES = [{
     "BACKEND": "django.template.backends.django.DjangoTemplates",
-    "DIRS": [BASE_DIR / "templates"],   # <-- /backend/templates
+    "DIRS": [BASE_DIR / "templates"],  
     "APP_DIRS": True,
     "OPTIONS": {"context_processors": [
         "django.template.context_processors.debug",
@@ -59,7 +59,12 @@ TEMPLATES = [{
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-STATICFILES_DIRS = [BASE_DIR / "static"] 
+FRONTEND_DIST = (BASE_DIR.parent / 'frontend' / 'dist').resolve()
+print(">> FRONTEND_DIST =", FRONTEND_DIST)  # προσωρινό debug, σβήστο μετά
+
+STATICFILES_DIRS = [
+    FRONTEND_DIST,
+]
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.getenv("MEDIA_ROOT", BASE_DIR / "media")
