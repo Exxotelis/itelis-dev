@@ -1,5 +1,7 @@
 import os
 from pathlib import Path
+
+from django.conf import settings
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "dev-only")
@@ -59,12 +61,12 @@ TEMPLATES = [{
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-FRONTEND_DIST = (BASE_DIR.parent / 'frontend' / 'dist').resolve()
-print(">> FRONTEND_DIST =", FRONTEND_DIST)  # προσωρινό debug, σβήστο μετά
-
-STATICFILES_DIRS = [
-    FRONTEND_DIST,
-]
+if settings.DEBUG:  # μόνο σε development
+    FRONTEND_DIST = (BASE_DIR.parent / 'frontend' / 'dist').resolve()
+    print(">> FRONTEND_DIST =", FRONTEND_DIST)  # προσωρινό debug
+    STATICFILES_DIRS = [FRONTEND_DIST]
+else:
+    STATICFILES_DIRS = [] 
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.getenv("MEDIA_ROOT", BASE_DIR / "media")
