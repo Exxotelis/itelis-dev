@@ -1,4 +1,3 @@
-
 import { memo } from "react";
 
 const projects = [
@@ -6,39 +5,38 @@ const projects = [
     tag: ["React", "Bootstrap", "PHP"],
     title: "VorinVista",
     link: "https://vorinvista.com/",
-    img: "/images/projects/vorinvista-full.png",
+    img: `${import.meta.env.BASE_URL}images/projects/vorinvista-full.png`,
     desc: "Agency website with clean UX and dynamic content."
   },
   {
     tag: ["Django", "REST", "Cloudinary"],
     title: "Reflectivo App",
     link: "https://reflectivo.site/",
-    img: "/images/projects/reflectivo.png",
+    img: `${import.meta.env.BASE_URL}images/projects/reflectivo.png`,
     desc: "Journaling app with calendar, data export, and Stripe subscription plans."
   },
   {
     tag: ["Shopify", "Liquid", "Custom Theme"],
     title: "TrekForte",
     link: "https://trekforte.com/",
-    img: "/images/projects/trekforte.png",
+    img: `${import.meta.env.BASE_URL}images/projects/trekforte.png`,
     desc: "Shopify e-commerce store built with a custom theme and modular sections."
   },
   {
     tag: ["WordPress", "SEO", "Custom Theme"],
     title: "Ek Neou Sindesi",
     link: "https://ekneousindesi.com/",
-    img: "/images/projects/ekneousindesi.png",
+    img: `${import.meta.env.BASE_URL}images/projects/ekneousindesi.png`,
     desc: "WordPress website with speed optimizations and on-page SEO improvements."
   },
 ];
-
 
 function SectionHead() {
   return (
     <div className="col-lg-8 col-md-8 col-12 ms-auto">
       <div className="section-title-wrap d-flex justify-content-center align-items-center mb-4">
         <img
-          src="/images/white-desk-work-study-aesthetics.jpg"
+          src={`${import.meta.env.BASE_URL}images/white-desk-work-study-aesthetics.jpg`}
           className="avatar-image img-fluid"
           alt="workspace"
         />
@@ -68,7 +66,7 @@ function ProjectCard({ p }) {
             src={p.img}
             className="projects-image img-fluid"
             alt={p.title}
-            onError={(e) => { e.currentTarget.src = "/images/projects/placeholder.jpg"; }}
+            onError={(e) => { e.currentTarget.src = `${import.meta.env.BASE_URL}images/projects/placeholder.jpg`; }}
           />
         </a>
       </div>
