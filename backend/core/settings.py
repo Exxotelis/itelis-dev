@@ -1,27 +1,29 @@
 import os
 from pathlib import Path
 
-from django.conf import settings
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
+def _env_bool(name: str, default: bool = False) -> bool:
+    return os.getenv(name, str(default)).strip().lower() in {"1", "true", "yes", "on"}
+
+
+def _env_list(name: str, default: str = "") -> list[str]:
+    raw = os.getenv(name, default)
+    return [item.strip() for item in raw.split(",") if item.strip()]
+
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "dev-only")
-#SECRET_KEY = "django-insecure-&5ruyze!i(cs=gotxbzro$1#0zby^^9hepk8uw&^njt&r$o5#n"
-DEBUG = os.getenv("DEBUG", "False") == "True"
-#DEBUG = True  # Set to False in production
+DEBUG = _env_bool("DEBUG", False)
 
-ALLOWED_HOSTS = [
-    "exxotelis.com",
-    "www.exxotelis.com",
-    "itelis-dev-production.up.railway.app", 
-    ]  
+ALLOWED_HOSTS = _env_list(
+    "ALLOWED_HOSTS",
+    "127.0.0.1,localhost,exxotelis.com,www.exxotelis.com",
+)
 
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-    "https://exxotelis.com",
-    "https://www.exxotelis.com",
-    "https://itelis-dev-production.up.railway.app",
-]
+CSRF_TRUSTED_ORIGINS = _env_list(
+    "CSRF_TRUSTED_ORIGINS",
+    "http://localhost:5173,http://127.0.0.1:5173,https://exxotelis.com,https://www.exxotelis.com",
+)
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -45,7 +47,6 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-# Templates: βάλε φάκελο templates στο backend/
 TEMPLATES = [{
     "BACKEND": "django.template.backends.django.DjangoTemplates",
     "DIRS": [BASE_DIR / "templates"],  
@@ -62,9 +63,9 @@ STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
-if settings.DEBUG:  # μόνο σε development
+if DEBUG:
     FRONTEND_DIST = (BASE_DIR.parent / 'frontend' / 'dist').resolve()
-    print(">> FRONTEND_DIST =", FRONTEND_DIST)  # προσωρινό debug
+    print(">> FRONTEND_DIST =", FRONTEND_DIST)
     STATICFILES_DIRS = [FRONTEND_DIST]
 else:
     STATICFILES_DIRS = [BASE_DIR / 'static'] 
@@ -72,7 +73,6 @@ else:
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.getenv("MEDIA_ROOT", BASE_DIR / "media")
 
-# SQLite (μένουμε σε SQLite)
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -84,12 +84,13 @@ WSGI_APPLICATION = "core.wsgi.application"
 
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SECURE_HSTS_SECONDS = 31536000
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_PRELOAD = True
+USE_HTTPS = _env_bool("USE_HTTPS", False)
+SECURE_SSL_REDIRECT = USE_HTTPS
+SESSION_COOKIE_SECURE = USE_HTTPS
+CSRF_COOKIE_SECURE = USE_HTTPS
+SECURE_HSTS_SECONDS = 31536000 if USE_HTTPS else 0
+SECURE_HSTS_INCLUDE_SUBDOMAINS = USE_HTTPS
+SECURE_HSTS_PRELOAD = USE_HTTPS
 X_FRAME_OPTIONS = "DENY"
 SECURE_REFERRER_POLICY = "same-origin"
 

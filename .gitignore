@@ -1,5 +1,12 @@
 .env/
+.env
+.env.*
 __pycache__/
+*.py[cod]
 db.sqlite3
 env
-
+.venv
+venv/
+*.log
+logs/
+*.gz

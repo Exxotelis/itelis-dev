@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://exxotelis.com/sitemap.xml

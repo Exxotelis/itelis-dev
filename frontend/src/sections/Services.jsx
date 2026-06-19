@@ -32,7 +32,7 @@ const services = [
     desc: "Performance tuning (Core Web Vitals), on-page SEO, security & backups.",
     icon: "bi bi-speedometer2",
     up: true,
-    cta: { type: "mailto", label: "Email Me", to: "you@example.com", subject: "WordPress & SEO help", body: "Hi itelis,\n\nI’d like help with WordPress & SEO.\n\nDetails:" }
+    cta: { type: "mailto", label: "Email Me", to: "info@vorinvista.com", subject: "WordPress & SEO help", body: "Hi itelis,\n\nI’d like help with WordPress & SEO.\n\nDetails:" }
   },
 ];
 

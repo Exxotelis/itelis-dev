@@ -29,6 +29,48 @@ const projects = [
     img: `${import.meta.env.BASE_URL}images/projects/ekneousindesi.png`,
     desc: "WordPress website with speed optimizations and on-page SEO improvements."
   },
+  {
+    tag: ["Django", "Community", "Bookings"],
+    title: "Dare To Connect",
+    link: "https://dare-to-connect.com/",
+    img: `${import.meta.env.BASE_URL}images/projects/dtc-home.jpg`,
+    desc: "Community-focused platform with polished UX and clear service flows."
+  },
+  {
+    tag: ["Django", "Beauty", "Branding"],
+    title: "Eleni Hair Style",
+    link: "https://elenshairstyle.com/",
+    img: `${import.meta.env.BASE_URL}images/projects/eleni-home.jpg`,
+    desc: "Salon website with strong visual identity and conversion-first pages."
+  },
+  {
+    tag: ["Django", "E-commerce", "Content"],
+    title: "Ev Doron",
+    link: "https://evdoron.com/",
+    img: `${import.meta.env.BASE_URL}images/projects/evdoron-home.png`,
+    desc: "Content-rich commerce experience built for storytelling and sales."
+  },
+  {
+    tag: ["Django", "Logistics", "SaaS"],
+    title: "Transferlys",
+    link: "https://transferlys.vorinvista.com/",
+    img: `${import.meta.env.BASE_URL}images/projects/transferlys-home-20260504.jpg`,
+    desc: "Logistics platform with fast navigation and practical workflows."
+  },
+  {
+    tag: ["Django", "Accounting", "Services"],
+    title: "Kristina Dervishi UK",
+    link: "https://kristinadervishi.uk/",
+    img: `${import.meta.env.BASE_URL}images/projects/kd-home.jpg`,
+    desc: "Professional services site with trust signals and clear offerings."
+  },
+  {
+    tag: ["Django", "Photography", "Portfolio"],
+    title: "Manos Photography",
+    link: "https://manosphotography.com/",
+    img: `${import.meta.env.BASE_URL}images/projects/manos-home-20260504.jpg`,
+    desc: "Portfolio-driven photography website focused on premium presentation."
+  },
 ];
 
 function SectionHead() {
